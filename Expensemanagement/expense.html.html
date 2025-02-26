@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <div class="form-container">
+        <input type="text" id="expense-name" placeholder="Expense Name">
+        <input type="number" id="expense-amount" placeholder="Amount">
+        <select id="expense-category">
+            <option value="food">Food</option>
+            <option value="travel">Travel</option>
+            <option value="shopping">Shopping</option>
+        </select>
+        <button id="add-expense">Add Expense</button>
+    </div>
+    
+    <ul id="expense-list"></ul>
+    
+    <div class="total">
+        <strong>Total: </strong> ₹<span id="total-amount">0.00</span>
+    </div>
+
+    <script>
+        document.getElementById("add-expense").addEventListener("click", function () {
+  
+            const expenseName = document.getElementById("expense-name").value.trim();
+            const expenseAmount = parseFloat(document.getElementById("expense-amount").value);
+            const category = document.getElementById("expense-category").value;
+            const expenseList = document.getElementById("expense-list");
+            const totalAmount = document.getElementById("total-amount");
+
+            if (!expenseName || isNaN(expenseAmount) || expenseAmount <= 0) {
+                alert("Please enter valid details");
+                return;
+            }
+
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `${expenseName} (${category}) - <strong>₹${expenseAmount.toFixed(2)}</strong>`;
+
+            expenseList.appendChild(listItem);
+
+            const currentTotal = parseFloat(totalAmount.textContent) || 0;
+            const newTotal = currentTotal + expenseAmount;
+            totalAmount.textContent = newTotal.toFixed(2);
+
+            document.getElementById("expense-name").value = "";
+            document.getElementById("expense-amount").value = "";
+            document.getElementById("expense-category").value = "food";
+        });
+    </script>
+</body>
+</html>
